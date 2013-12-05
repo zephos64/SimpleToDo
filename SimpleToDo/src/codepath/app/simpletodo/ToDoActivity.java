@@ -1,6 +1,10 @@
 package codepath.app.simpletodo;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.commons.io.FileUtils;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -36,14 +40,25 @@ public class ToDoActivity extends Activity {
     }
     
     private void readItems() {
-    	toDoItems = new ArrayList<String>();
-    	toDoItems.add("Item 1");
-    	toDoItems.add("Item 2");
-    	toDoItems.add("Item 3");
+    	File filesDir = getFilesDir();
+    	File todoFile = new File(filesDir, "todo.txt");
+    	
+    	try {
+    		toDoItems = new ArrayList<String>(FileUtils.readLines(todoFile));
+    	} catch (IOException e) {
+    		toDoItems = new ArrayList<String>();
+    	}
     }
 
     private void writeItems() {
+    	File filesDir = getFilesDir();
+    	File todoFile = new File(filesDir, "todo.txt");
     	
+    	try {
+    		FileUtils.writeLines(todoFile, toDoItems);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
     
     /*
@@ -53,7 +68,7 @@ public class ToDoActivity extends Activity {
     	String itemText = etNewItem.getText().toString();
     	aToDoItems.add(itemText);
     	etNewItem.setText("");
-    	
+    	writeItems();
     }
     
     private void setupListViewListener() {
@@ -63,6 +78,7 @@ public class ToDoActivity extends Activity {
 					int pos, long id) {
 				toDoItems.remove(pos);
 				aToDoItems.notifyDataSetChanged();
+				writeItems();
 				return true;
 			}
 		});
