@@ -17,11 +17,12 @@ public class EditItemActivity extends Activity {
 		setContentView(R.layout.activity_edit_item);
 		
 		Intent mainActivity = getIntent();
+		itemLoc = mainActivity.getIntExtra("itemLoc", -1);
 		
 		etItemInfo = (EditText) findViewById(R.id.etItemInfo);
-		
 		etItemInfo.setText(mainActivity.getStringExtra("item"));
-		itemLoc = mainActivity.getIntExtra("itemLoc", -1);
+		etItemInfo.setSelection(etItemInfo.getText().length());
+		etItemInfo.requestFocus();
 	}
 
 	@Override
