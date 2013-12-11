@@ -8,9 +8,11 @@ import org.apache.commons.io.FileUtils;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -21,7 +23,9 @@ public class ToDoActivity extends Activity {
 	private ArrayAdapter<String> aToDoItems;
 	private ListView lvItems;
 	private EditText etNewItem;
-
+	
+	private final int REQUEST_CODE = 20;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,18 @@ public class ToDoActivity extends Activity {
 				return true;
 			}
 		});
+    	
+    	lvItems.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View item,
+					int pos, long id) {
+				Intent edit = new Intent(ToDoActivity.this, EditItemActivity.class);
+				edit.putExtra("item", toDoItems.get(pos));
+				edit.putExtra("itemLoc", pos);
+				startActivityForResult(edit, REQUEST_CODE);
+			}
+		
+    	});
     }
 
     @Override
@@ -89,5 +105,15 @@ public class ToDoActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.to_do, menu);
         return true;
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if(resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+    		toDoItems.set(data.getIntExtra("itemLoc", -1),
+    				data.getStringExtra("newItem"));
+    		aToDoItems.notifyDataSetChanged();
+    		writeItems();
+    	}
     }
 }
