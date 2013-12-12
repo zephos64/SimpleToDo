@@ -26,6 +26,10 @@
             android:name="codepath.app.simpletodo.EditItemActivity"
             android:label="@string/title_activity_edit_item" >
         </activity>
+        <activity
+            android:name="codepath.app.simpletodo.ProfileActvity"
+            android:label="@string/title_activity_profile_actvity" >
+        </activity>
     </application>
 
 </manifest>

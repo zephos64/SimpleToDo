@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnAddItem"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_below="@+id/btnProfile" >
 
     </ListView>
 
@@ -38,5 +38,23 @@
         android:layout_alignParentRight="true"
         android:onClick="onAddedItem"
         android:text="@string/add_button_label" />
+
+    <Button
+        android:id="@+id/btnProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onProfileChange"
+        android:text="@string/main_button_selectpro" />
+
+    <TextView
+        android:id="@+id/txCurrProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/lvItems"
+        android:layout_alignTop="@+id/btnProfile"
+        android:text="@string/main_tx_profname"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

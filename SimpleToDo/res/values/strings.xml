@@ -10,5 +10,11 @@
     <string name="title_activity_edit_item">EditItemActivity</string>
     <string name="edit_info_text">Edit Item Below:</string>
     <string name="edit_button_text">Save</string>
+    <string name="title_activity_profile_actvity">ProfileActvity</string>
+    <string name="profile_add">Add Profile</string>
+    <string name="profile_delete">Delete Profile</string>
+    <string name="main_button_selectpro">Select Profile...</string>
+    <string name="profile_editText_name">Profile Name</string>
+    <string name="main_tx_profname">Default</string>
 
 </resources>
