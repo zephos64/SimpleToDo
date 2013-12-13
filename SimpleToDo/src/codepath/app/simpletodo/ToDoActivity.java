@@ -39,12 +39,41 @@ public class ToDoActivity extends Activity {
         etNewItem = (EditText) findViewById(R.id.etNewItem);
         txCurrProf = (TextView) findViewById(R.id.txCurrProf);
         
+        loadPrevProfile();
         readItems(txCurrProf.getText().toString());
         
         setupListViewListener();
     }
     
-    private void readItems(String profile) {
+    private void loadPrevProfile() {
+    	File filesDir = getFilesDir();
+    	File propFile = new File(filesDir, "ToDo.prop");
+    	
+    	try {
+    		FileUtils.touch(propFile);
+    		
+    		if(FileUtils.sizeOf(propFile) == 0) {
+    			FileUtils.write(propFile, "Default");
+    		}
+    		
+    		txCurrProf.setText(FileUtils.readLines(propFile).get(0));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+	}
+    
+    private void saveCurrProfile() {
+    	File filesDir = getFilesDir();
+    	File propFile = new File(filesDir, "ToDo.prop");
+    	
+    	try {
+    		FileUtils.write(propFile, txCurrProf.getText().toString());
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
+
+	private void readItems(String profile) {
     	File filesDir = getFilesDir();
     	File todoFile = new File(filesDir, profile+"todo.txt");
     	
@@ -135,6 +164,7 @@ public class ToDoActivity extends Activity {
     		txCurrProf.setText(data.getStringExtra("profile"));
     		
     		readItems(txCurrProf.getText().toString());
+    		saveCurrProfile();
     	}
     }
 }

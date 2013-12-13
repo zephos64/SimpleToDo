@@ -95,8 +95,8 @@ public class ProfileActvity extends Activity {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> adapter, View item,
 						int pos, long id) {
-					if(profiles.get(pos).equals("Default")) {
-						Toast.makeText(ProfileActvity.this, "Cannot delete default profile", Toast.LENGTH_SHORT).show();
+					if(profiles.size() <= 1) {
+						Toast.makeText(ProfileActvity.this, "Cannot delete last profile", Toast.LENGTH_SHORT).show();
 						return true;
 					} 
 					
