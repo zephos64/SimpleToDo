@@ -69,7 +69,6 @@ public class ToDoActivity extends Activity {
     			for (String fileName : filesDir.list()) {
     				if(fileName.contains("todo.txt")) {
     					txCurrProf.setText(fileName.substring(0, fileName.indexOf("todo.txt")));
-    					return;
     				}
     			}
     		}
