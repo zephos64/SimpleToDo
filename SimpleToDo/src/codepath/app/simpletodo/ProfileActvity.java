@@ -48,8 +48,7 @@ public class ProfileActvity extends Activity {
     	
     	for (String fileName : filesDir.list()) {
 			if(fileName.contains("todo.txt")) {
-				int temp = fileName.indexOf("todo.txt");
-				profiles.add(fileName.substring(0, temp));
+				profiles.add(fileName.substring(0, fileName.indexOf("todo.txt")));
 			}
 		}
     }

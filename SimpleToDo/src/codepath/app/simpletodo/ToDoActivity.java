@@ -52,11 +52,27 @@ public class ToDoActivity extends Activity {
     	try {
     		FileUtils.touch(propFile);
     		
+    		// First time creating, so create property file and populate it
+    		// Should write, so solve edge case if they do not change profile
+    		//  then no profile written
     		if(FileUtils.sizeOf(propFile) == 0) {
     			FileUtils.write(propFile, "Default");
     		}
     		
-    		txCurrProf.setText(FileUtils.readLines(propFile).get(0));
+    		String profile = FileUtils.readLines(propFile).get(0);
+    		
+    		// This is for edge case when profile deleted, but leave
+    		// app on profile screen. Should choose new random profile
+    		if(checkProfExists(profile)) {
+    			txCurrProf.setText(profile);
+    		} else {
+    			for (String fileName : filesDir.list()) {
+    				if(fileName.contains("todo.txt")) {
+    					txCurrProf.setText(fileName.substring(0, fileName.indexOf("todo.txt")));
+    					return;
+    				}
+    			}
+    		}
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
@@ -71,6 +87,19 @@ public class ToDoActivity extends Activity {
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
+    }
+    
+    private boolean checkProfExists(String prof) {
+    	File filesDir = getFilesDir();
+    	String[] listOfProf = filesDir.list();
+    	
+    	for (String profile : listOfProf) {
+    		if((profile+"todo.txt").equals(prof)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 
 	private void readItems(String profile) {
