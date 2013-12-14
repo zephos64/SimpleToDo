@@ -16,5 +16,11 @@
     <string name="main_button_selectpro">Select Profile...</string>
     <string name="profile_editText_name">Profile Name</string>
     <string name="main_tx_profname">Default</string>
+    
+    <string name="deleteProf">Delete Profile?</string>
+    <string name="deleteProfMsg">Are you sure you want to delete profile [temp]?</string>
+    <string name="temp">[temp]</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

@@ -8,6 +8,8 @@ import org.apache.commons.io.FileUtils;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -94,16 +96,31 @@ public class ProfileActvity extends Activity {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> adapter, View item,
 						int pos, long id) {
-					if(profiles.size() <= 1) {
-						Toast.makeText(ProfileActvity.this, "Cannot delete last profile", Toast.LENGTH_SHORT).show();
-						return true;
-					} 
+					String deleteProfMsg = getResources().getString(R.string.deleteProfMsg);
+					deleteProfMsg = deleteProfMsg.replace(
+							getResources().getString(R.string.temp),
+							profiles.get(pos).toString());
 					
-					File filesDir = getFilesDir();
-					FileUtils.deleteQuietly(new File(filesDir, profiles.get(pos)+"todo.txt"));
-					profiles.remove(pos);
-					aProfiles.notifyDataSetChanged();
-
+					final int profPos = pos;
+					new AlertDialog.Builder(ProfileActvity.this)
+						.setIcon(android.R.drawable.ic_dialog_alert)
+						.setTitle(R.string.deleteProf)
+						.setMessage(deleteProfMsg)
+						.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if(profiles.size() <= 1) {
+									Toast.makeText(ProfileActvity.this, "Cannot delete last profile", Toast.LENGTH_SHORT).show();
+								} else {
+									File filesDir = getFilesDir();
+									FileUtils.deleteQuietly(new File(filesDir, profiles.get(profPos)+"todo.txt"));
+									profiles.remove(profPos);
+									aProfiles.notifyDataSetChanged();
+								}
+							}
+						})
+						.setNegativeButton(R.string.no, null)
+						.show();
 					return true;
 				}
 	    	});
