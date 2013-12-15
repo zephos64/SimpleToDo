@@ -88,7 +88,7 @@ public class ToDoActivity extends Activity {
     	File propFile = new File(filesDir, "ToDo.prop");
     	
     	try {
-    		FileUtils.write(propFile, txCurrProf.getText().toString());
+    		FileUtils.write(propFile, txCurrProf.getText().toString()+"todo.txt");
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
@@ -217,6 +217,7 @@ public class ToDoActivity extends Activity {
     		aToDoItems.notifyDataSetChanged();
     		writeItems(txCurrProf.getText().toString());
     	} else if (resultCode == RESULT_OK && requestCode == PROFILE_REQUEST_CODE) {
+    		
     		txCurrProf.setText(data.getStringExtra("profile"));
     		
     		readItems(txCurrProf.getText().toString());
