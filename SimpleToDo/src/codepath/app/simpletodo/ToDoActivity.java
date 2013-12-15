@@ -62,6 +62,7 @@ public class ToDoActivity extends Activity {
     		//  then no profile written
     		if(FileUtils.sizeOf(propFile) == 0) {
     			FileUtils.write(propFile, "Default");
+    			FileUtils.touch(new File(filesDir, "Defaulttodo.txt"));
     		}
     		
     		String profile = FileUtils.readLines(propFile).get(0);
