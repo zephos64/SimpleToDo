@@ -9,12 +9,15 @@ import org.apache.commons.io.FileUtils;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ public class ToDoActivity extends Activity {
 	private ListView lvItems;
 	private EditText etNewItem;
 	private TextView txCurrProf;
+	private Button btnAddItem;
 	
 	private final int EDIT_REQUEST_CODE = 20;
 	private final int PROFILE_REQUEST_CODE = 21;
@@ -38,6 +42,8 @@ public class ToDoActivity extends Activity {
         lvItems = (ListView) findViewById(R.id.lvItems);
         etNewItem = (EditText) findViewById(R.id.etNewItem);
         txCurrProf = (TextView) findViewById(R.id.txCurrProf);
+        btnAddItem = (Button) findViewById(R.id.btnAddItem);
+        btnAddItem.setEnabled(false);
         
         loadPrevProfile();
         readItems(txCurrProf.getText().toString());
@@ -135,10 +141,7 @@ public class ToDoActivity extends Activity {
      */
     public void onAddedItem(View v) {
     	String itemText = etNewItem.getText().toString();
-    	if(itemText.isEmpty()) {
-    		Toast.makeText(this, "Please input a name", Toast.LENGTH_SHORT).show();
-    		return;
-    	}
+    	
     	aToDoItems.add(itemText);
     	etNewItem.setText("");
     	writeItems(txCurrProf.getText().toString());
@@ -171,6 +174,31 @@ public class ToDoActivity extends Activity {
 				startActivityForResult(edit, EDIT_REQUEST_CODE);
 			}
 		
+    	});
+    	etNewItem.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				if(etNewItem.getText().length() == 0) {
+					btnAddItem.setEnabled(false);
+				} else {
+					btnAddItem.setEnabled(true);
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+				
+			}
     	});
     }
 
